@@ -41,3 +41,38 @@ class BTree:
         result = []
         self._inorder_traversal(self.root, result)
         return result
+    
+    def _inorder_traversal(self, node, result):
+        if node:
+            self._inorder_traversal(node.left, result)
+            result.append(node.key)
+            self._inorder_traversal(node.right, result)
+
+    def get_height(self, node=None):
+        if node is None:
+            node = self.root
+        if node is None:
+            return -1
+        return 1 + max(self.get_height(node.left), self.get_height(node.right))
+
+    def get_distance_from_root(self, key):
+        return self._get_distance_from_root(self.root, key, 0)
+
+    def _get_distance_from_root(self, node, key, distance):
+        if node is None:
+            return -1  # Key not found
+        if node.key == key:
+            return distance
+        elif key < node.key:
+            return self._get_distance_from_root(node.left, key, distance + 1)
+        else:
+            return self._get_distance_from_root(node.right, key, distance + 1)
+
+    def is_balanced(self, node=None):
+        if node is None:
+            node = self.root
+        if node is None:
+            return True
+        left_height = self.get_height(node.left)
+        right_height = self.get_height(node.right)
+        return abs(left_height - right_height) <= 1 and self.is_balanced(node.left) and self.is_balanced(node.right)
