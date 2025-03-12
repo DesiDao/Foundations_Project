@@ -76,3 +76,14 @@ class BTree:
         left_height = self.get_height(node.left)
         right_height = self.get_height(node.right)
         return abs(left_height - right_height) <= 1 and self.is_balanced(node.left) and self.is_balanced(node.right)
+    
+    # Example usage
+    btree = BTree()
+    values = [50, 30, 70, 20, 40, 60, 80]
+    for v in values:
+        btree.insert(v)
+    
+    print("Inorder Traversal:", btree.inorder_traversal())
+    print("Height of tree:", btree.get_height())
+    print("Distance of 40 from root:", btree.get_distance_from_root(40))
+    print("Is the tree balanced?", btree.is_balanced())
